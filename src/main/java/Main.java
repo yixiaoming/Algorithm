@@ -1,32 +1,39 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import javax.sound.midi.Soundbank;
+import java.awt.font.NumericShaper;
+import java.lang.management.PlatformLoggingMXBean;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
         Solution s = new Solution();
-        System.out.println(s.firstMissingPositive(new int[]{10, 1, 2, 7, 6, 1, 5}));
+        System.out.println(s.divide(1, -1));
     }
 }
 
 class Solution {
-    public int firstMissingPositive(int[] nums) {
-        Arrays.sort(nums);
-        int record = 1;
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] <= 0) continue;
-            while (i > 0 && nums[i] == nums[i - 1]) {
-                i++;
-            }
-            if (record != nums[i]) {
-                break;
+    public int divide(int dividend, int divisor) {
+        int result = 0;
+        if(dividend == 0) return 0;
+        int plus = (dividend < 0 && divisor > 0) || (dividend > 0 && divisor < 0) ? -1 : 1;
+        if(dividend == 1) return dividend*plus;
+        if(divisor == -1){
+            if(dividend>Integer.MIN_VALUE) return -dividend;
+            return Integer.MAX_VALUE;
+        }
+        if (dividend < 0) {
+            dividend = -dividend;
+            divisor = -divisor;
+        }
+
+        while (dividend >= 0) {
+            result++;
+            if (divisor > 0) {
+                dividend -= divisor;
             } else {
-                record++;
+                dividend += divisor;
             }
         }
-        return record;
+        return (result - 1) * plus;
     }
 }
-
