@@ -1,5 +1,20 @@
+/*
+ * @lc app=leetcode.cn id=25 lang=kotlin
+ *
+ * [25] K 个一组翻转链表
+ */
 
-class Solution1 {
+// @lc code=start
+/**
+ * Example:
+ * var li = ListNode(5)
+ * var v = li.`val`
+ * Definition for singly-linked list.
+ * class ListNode(var `val`: Int) {
+ *     var next: ListNode? = null
+ * }
+ */
+class Solution {
     fun reverseKGroup(head: ListNode?, k: Int): ListNode? {
         var p = head
         for (i in 1..k) {
@@ -31,29 +46,5 @@ class Solution1 {
         return pre
     }
 }
+// @lc code=end
 
-fun main() {
-    val solution = Solution1()
-    var head = ListNode(1).apply {
-        next = ListNode(2).apply {
-            next = ListNode(3).apply {
-                next = ListNode(4).apply {
-                    next = ListNode(5).apply {
-                        next = ListNode(6)
-                    }
-                }
-            }
-        }
-    }
-    var result = solution.reverseKGroup(head, 4)
-    var p = result
-    while (p!=null){
-        print("${p.`val`},")
-        p = p.next
-    }
-    println()
-}
-
-class ListNode(var `val`: Int) {
-    var next: ListNode? = null
-}
