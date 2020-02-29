@@ -1,4 +1,11 @@
-class Solution1 {
+/*
+ * @lc app=leetcode.cn id=52 lang=kotlin
+ *
+ * [52] N皇后 II
+ */
+
+// @lc code=start
+class Solution {
     fun totalNQueens(n: Int): Int {
         var result = 0
         var matrix = ArrayList<ArrayList<String>>(n).apply {
@@ -59,9 +66,5 @@ class Solution1 {
         return result
     }
 }
+// @lc code=end
 
-fun main() {
-    val solution = Solution1()
-    var result = solution.totalNQueens(8)
-    println(result)
-}

@@ -1,6 +1,13 @@
-class Solution1 {
-    fun totalNQueens(n: Int): Int {
-        var result = 0
+/*
+ * @lc app=leetcode.cn id=51 lang=kotlin
+ *
+ * [51] N皇后
+ */
+
+// @lc code=start
+class Solution {
+    fun solveNQueens(n: Int): List<List<String>> {
+        var results = ArrayList<ArrayList<String>>()
         var matrix = ArrayList<ArrayList<String>>(n).apply {
             for (i in 1..n) {
                 var list = ArrayList<String>(n).apply {
@@ -42,12 +49,24 @@ class Solution1 {
             return true
         }
 
+        fun addSolution(matrix: ArrayList<ArrayList<String>>) {
+            var copyMatrix = ArrayList<String>()
+            for ((i, row) in matrix.withIndex()) {
+                var copyRow = StringBuffer()
+                for (col in matrix[i]) {
+                    copyRow.append(col)
+                }
+                copyMatrix.add(copyRow.toString())
+            }
+            results.add(copyMatrix)
+        }
+
         fun backtrack(curRow: Int) {
             for (i in 0 until n) {
                 if (canPlace(curRow, i)) {
                     matrix[curRow][i] = "Q"
                     if (curRow == n - 1) {
-                        result++
+                        addSolution(matrix)
                     } else {
                         backtrack(curRow + 1)
                     }
@@ -56,12 +75,8 @@ class Solution1 {
             }
         }
         backtrack(0)
-        return result
+        return results
     }
 }
+// @lc code=end
 
-fun main() {
-    val solution = Solution1()
-    var result = solution.totalNQueens(8)
-    println(result)
-}
