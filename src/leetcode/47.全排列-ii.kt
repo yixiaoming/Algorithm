@@ -8,8 +8,7 @@
 class Solution {
     fun permuteUnique(nums: IntArray): List<List<Int>> {
         var results = mutableListOf<List<Int>>()
-        nums.sort()
-        fun backtrack(index: Int, nums: IntArray) {
+        fun backtrack(index: Int) {
             if (index == nums.size - 1) {
                 results.add((nums.toList() as List<Int>))
                 return
@@ -21,15 +20,16 @@ class Solution {
                 }
                 last.add(nums[i])
                 swap(index, i, nums)
-                backtrack(index + 1, nums)
+                backtrack(index + 1)
                 swap(index, i, nums)
             }
         }
-        backtrack(0, nums)
+        backtrack(0)
         return results
     }
 
     fun swap(i: Int, j: Int, nums: IntArray) {
+        if (i==j) return
         var temp = nums[i]
         nums[i] = nums[j]
         nums[j] = temp
