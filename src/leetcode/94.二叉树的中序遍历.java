@@ -21,19 +21,30 @@ import java.util.List;
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> results = new ArrayList<>();   
-        process(results, root);
+        List<Integer> results = new ArrayList();   
+        Stack<TreeNode> stack = new Stack();
+        while(!stack.isEmpty() || root!=null) {
+            while(root!=null){
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            results.add(root.val);
+            root = root.right;
+        }
         return results;
     }
 
-    public void process(List<Integer> list, TreeNode root){
-        if(root == null){
-            return;
-        }
-        process(list, root.left);
-        list.add(root.val);
-        process(list, root.right);
-    }
+    // public void process(List<Integer> list, TreeNode root){
+    //     if(root == null){
+    //         return;
+    //     }
+    //     process(list, root.left);
+    //     list.add(root.val);
+    //     process(list, root.right);
+    // }
+
+
 }
 // @lc code=end
 
