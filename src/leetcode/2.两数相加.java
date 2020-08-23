@@ -17,34 +17,19 @@ package leetcode;
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int jinwei = 0;
-        ListNode head = null;
-        ListNode pHead = null;
-        ListNode p = null;
-        while (l1 != null || l2!=null || jinwei>0) {
-            int sum = 0;
-            if(l1 != null && l2!=null){
-                sum = l1.val + l2.val;
-                l1 = l1.next;
-                l2 = l2.next;
-            } else if(l1 != null){
-                sum = l1.val;
-                l1 = l1.next;
-            } else if(l2 != null){
-                sum = l2.val;
-                l2 = l2.next;
-            }
-            sum += jinwei;
-            p = new ListNode(sum%10);
-            jinwei = sum/10;
-            if(head == null){
-                head = p;
-                pHead = p;
-            }else{
-                pHead.next = p;
-                pHead = pHead.next;
-            }
+        ListNode p = l1, q = l2, head = new ListNode(0), cur = head;
+        while(p != null || q!=null){
+            int a = p == null ? 0 : p.val;
+            int b = q == null ? 0 : q.val;
+            int sum = a+b+jinwei;
+            cur.next = new ListNode(sum % 10);
+            jinwei = sum / 10;
+            if(p != null) p = p.next;
+            if(q != null) q = q.next;
+            cur = cur.next;
         }
-        return head;
+        if(jinwei>0) cur.next = new ListNode(jinwei);
+        return head.next;
     }
 }
 // @lc code=end

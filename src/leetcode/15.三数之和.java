@@ -1,5 +1,6 @@
 package leetcode;
 
+import java.awt.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,33 +14,31 @@ import java.util.Arrays;
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
-        for(int i=0; i<nums.length; i++){
-            int L = i+1;
-            int R = nums.length-1;
-            if(nums[i]>0){
-                break;
-            }
-            if (i>0 && nums[i] == nums[i-1]) continue;
-            while(L<R){
+        List<List<Integer>> results = new ArrayList<>();
+        for (int i = 0; i < nums.length - 1; i++) {
+            int L = i + 1;
+            int R = nums.length - 1;
+            // 当前值等于前一个值，跳过
+            if (i > 0 && nums[i - 1] == nums[i])
+                continue;
+            while (L < R) {
                 int sum = nums[i] + nums[L] + nums[R];
-                if( sum == 0){
-                    result.add(Arrays.asList(nums[i], nums[L], nums[R]));
-                    while(L<R && nums[L] == nums[L+1])
-                        L++;
-                    while(L<R && nums[R] == nums[R-1])
+                if (sum == 0) {
+                    results.add(Arrays.asList(nums[i], nums[L], nums[R]));
+                    // 排除掉连续的数
+                    while (R - 1 > L && nums[R - 1] == nums[R])
                         R--;
+                    while (L + 1 < R && nums[L + 1] == nums[L])
+                        L++;
                     L++;
-                } else if( sum < 0 ){
+                } else if (sum < 0) {
                     L++;
-                } else if( sum > 0){
+                } else {
                     R--;
                 }
             }
-            
         }
-        return result;
+        return results;
     }
 }
 // @lc code=end
-

@@ -7,44 +7,61 @@ package leetcode;/*
 // @lc code=start
 class Solution {
     public String longestPalindrome(String s) {
-        char[] arr = insertS(s);
-        String huiwen = "";
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < arr.length; i++) {
-            int len = 0;
-            int k = 0;
-            while (i - k >= 0 && i + k < arr.length && arr[i - k] == arr[i + k]) {
-                len++;
-                k++;
+        int len = s.length();
+        if(len < 2) return s;
+
+        String maxStr = "";
+        for(int i=0; i<s.length()-1; i++){
+            String oddStr = plaindrome(s, i, i);
+            String evenStr = plaindrome(s, i, i+1);
+            String tempMax = oddStr.length() > evenStr.length() ? oddStr : evenStr;
+            if(tempMax.length()> maxStr.length()){
+                maxStr = tempMax;
             }
-            if (len > max) {
-                max = len;
-                StringBuilder sb = new StringBuilder();
-                k = i - k < 0 ? i : k;
-                k = i + k >= arr.length ? arr.length-1 - i : k;
-                if(arr[i - k] != arr[i + k]){
-                    k--;
-                }
-                for (int j = i - k; j <= i + k; j++) {
-                    if (arr[j] != '_') {
-                        sb.append(arr[j]);
-                    }
-                }
-                huiwen = sb.toString();
-            }
-        }
-        return huiwen;
+        }    
+        return maxStr;
     }
 
-    public char[] insertS(String s) {
-        char[] arr = new char[s.length() * 2 + 1];
-        int k = 0;
-        for (int i = 0; i < s.length(); i++) {
-            arr[k++] = '_';
-            arr[k++] = s.charAt(i);
+    public String plaindrome(String s, int i, int j) {
+        while (i >= 0 && j < s.length() && s.charAt(i) == s.charAt(j)) {
+            i--;
+            j++;
         }
-        arr[k++] = '_';
-        return arr;
+        return s.substring(i+1, j);
     }
+
+    // 动态规划
+    // public String longestPalindrome(String s) {
+    //     int len = s.length();
+    //     if(len < 2) return s;
+
+    //     int maxLen = 1;
+    //     int start = 0;
+
+    //     boolean[][] dp = new boolean[len][len];
+    //     for(int i=0; i<len; i++) dp[i][i] = true;
+    //     for(int j=1; j<len; j++){
+    //         for(int i=0; i<j; i++){
+    //             if(s.charAt(i) != s.charAt(j)) {
+    //                 dp[i][j] = false;
+    //             } else {
+    //                 if( j-i < 3){
+    //                     dp[i][j] = true;
+    //                 } else{
+    //                     dp[i][j] = dp[i+1][j-1];
+    //                 }
+    //             }
+
+    //             if(dp[i][j]){
+    //                 int tempLen = j-i+1;
+    //                 if(tempLen>maxLen){
+    //                     maxLen = tempLen;
+    //                     start = i;
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     return s.substring(start, start+maxLen);
+    // }
 }
 // @lc code=end
